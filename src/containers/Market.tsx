@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from 'react';
 
-export interface IAppProps {}
+// export interface IAppProps {}
 
-export default function App(props: IAppProps) {
+export default function Market() {
   return <div>Hallo</div>;
 }
