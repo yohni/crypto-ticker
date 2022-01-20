@@ -1,7 +1,7 @@
 import React from 'react';
 import Market from './containers/Market';
 
-function App() {
+function App(): React.ReactElement {
   return (
     <div className="App">
       <Market />

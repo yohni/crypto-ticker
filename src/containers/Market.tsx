@@ -2,6 +2,8 @@ import * as React from 'react';
 
 // export interface IAppProps {}
 
-export default function Market() {
+function Market(): React.ReactElement {
   return <div>Hallo</div>;
 }
+
+export default Market;
