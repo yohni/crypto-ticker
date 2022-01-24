@@ -7,3 +7,16 @@
     @apply px-8 md:px-16 lg:px-0 max-w-6xl mx-auto;
   }
 }
+
+@layer utilities {
+  .truncate-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+  }
+}
+
+html {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
