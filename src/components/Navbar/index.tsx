@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { FaEthereum } from 'react-icons/fa';
-import NavbarDrawer from '../NavbarDrawer';
+import NavbarDrawer from './NavbarDrawer';
 
 // interface INavbarProps {}
 
@@ -29,7 +29,7 @@ const Navbar: React.FunctionComponent = () => {
 
       <div
         className={classNames('py-5', {
-          'bg-base-200': scrolled,
+          'bg-base-200 shadow-md': scrolled,
         })}
       >
         <div className="container flex items-center">
