@@ -28,7 +28,7 @@ const Navbar: React.FunctionComponent = () => {
       <NavbarDrawer menu={NAVBAR_MENU} isOpen={isOpen} />
 
       <div
-        className={classNames('py-5', {
+        className={classNames('py-5 bg-white', {
           'bg-base-200 shadow-md': scrolled,
         })}
       >

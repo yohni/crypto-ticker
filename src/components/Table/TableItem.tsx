@@ -27,7 +27,7 @@ const TableItem = ({ data }: Props): React.ReactElement => {
         </div>
       </div>
       {/* col 2 */}
-      <div>
+      <div className="flex flex-col items-center">
         <div
           className={classNames('text-base', {
             'text-success': percentage > 0,
@@ -46,10 +46,10 @@ const TableItem = ({ data }: Props): React.ReactElement => {
         </div>
       </div>
       {/* col 3 */}
-      <div className="flex-1 text-right">
+      <div className="flex-1 flex flex-col items-center text-right">
         <div>
           {currencyFormatter.format(
-            marketCap(data?.ticker?.lastPrice, data?.ticker?.quoteVolume)
+            marketCap(parseFloat(data?.ticker?.lastPrice), data?.ticker?.count)
           ) || '-'}
         </div>
         <div className="text-xs">
