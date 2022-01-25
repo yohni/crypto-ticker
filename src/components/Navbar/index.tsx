@@ -23,7 +23,7 @@ const Navbar: React.FunctionComponent = () => {
   });
 
   return (
-    <div className="fixed inset-x-0 top-0 text-neutral z-50">
+    <nav className="fixed inset-x-0 top-0 text-neutral z-50">
       {/* mobile dropdown */}
       <NavbarDrawer menu={NAVBAR_MENU} isOpen={isOpen} />
 
@@ -98,7 +98,7 @@ const Navbar: React.FunctionComponent = () => {
           </div>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
