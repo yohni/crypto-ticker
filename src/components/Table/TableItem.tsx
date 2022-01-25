@@ -11,23 +11,27 @@ type Props = {
   data: Record<string, any>;
 };
 
-const TableItem = ({ data }: Props): React.ReactElement => {
+const TableItem: React.FC<Props> = ({ data }: Props) => {
   const percentage = parseFloat(data?.ticker?.priceChangePercent);
   return (
-    <div className="container grid grid-cols-table-xs gap-x-2 py-2">
+    <div className="container grid grid-cols-table-xs md:grid-cols-3 gap-x-2 py-2 shadow-sm">
       {/* col 1 */}
       <div className="flex items-center">
         <div
-          className="w-8 h-8 md:w-24 md:h-24 bg-purple-600 rounded-full flex-shrink-0"
+          className="w-8 h-8 bg-purple-600 rounded-full flex-shrink-0"
           style={{ backgroundImage: `url(${data?.logoUrl})` }}
         />
-        <div className="ml-2 flex-1">
-          <h6 className="text-base truncate-1">{data.assetCode}</h6>
-          <span className="text-xs truncate-1">{data.assetName}</span>
+        <div className="ml-2 md:ml-4 flex-1 md:flex md:items-baseline">
+          <h6 className="text-base md:text-lg md:font-bold truncate-1 md:mr-2">
+            {data.assetCode}
+          </h6>
+          <span className="text-xs md:text-base truncate-1">
+            {data.assetName}
+          </span>
         </div>
       </div>
       {/* col 2 */}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-around">
         <div
           className={classNames('text-base', {
             'text-success': percentage > 0,
@@ -37,7 +41,7 @@ const TableItem = ({ data }: Props): React.ReactElement => {
           {currencyFormatter.format(data?.ticker?.lastPrice) || '-'}
         </div>
         <div
-          className={classNames('text-xs', {
+          className={classNames('text-xs md:text-base', {
             // 'text-success': percentage > 0,
             // 'text-error': percentage < 0,
           })}
@@ -46,13 +50,13 @@ const TableItem = ({ data }: Props): React.ReactElement => {
         </div>
       </div>
       {/* col 3 */}
-      <div className="flex-1 flex flex-col items-center text-right">
-        <div>
+      <div className="flex-1 flex flex-col text-right md:flex-row-reverse md:justify-around md:items-center">
+        <div className="text-base">
           {currencyFormatter.format(
             marketCap(parseFloat(data?.ticker?.lastPrice), data?.ticker?.count)
           ) || '-'}
         </div>
-        <div className="text-xs">
+        <div className="text-xs md:text-base">
           {numberFormater.format(data?.ticker?.volume)}
         </div>
       </div>
