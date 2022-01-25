@@ -1,36 +1,28 @@
 import * as React from 'react';
+import { useCallback } from 'react';
+import Empty from '../components/Empty';
 import Pagination from '../components/Pagination/Pagination';
+import SearchBar from '../components/SearchBar';
+import TableHeader from '../components/Table/TableHeader';
 import TableItem from '../components/Table/TableItem';
 import Tag from '../components/Tag/Tag';
 import useAssets from '../hooks/useAssets';
 import useTicker from '../hooks/useTicker';
-import { handleSearch, marketCap } from '../utils/assets.util';
+import { handleSearch, marketCapComparator } from '../utils/assets.util';
 
-// export interface IAppProps {}
-
-const Market = (): React.ReactElement => {
+const Market: React.FC = () => {
   const [page, setPage] = React.useState(0);
-  const [fTag, setFTag] = React.useState('');
+  const [selectedTag, setSelectedTag] = React.useState('');
   const [keywords, setKeywords] = React.useState('');
   const PER_PAGE = 20;
   const { assets, isLoading, isError, tags } = useAssets();
   const { assetTickers, isError: tickerError } = useTicker();
 
-  const handleFilter = React.useCallback(
-    (obj: Record<string, any>, filterTag: string, keyword: string): boolean => {
-      let filters = obj.ticker;
-      if (filterTag) {
-        filters = filters && obj.tags.includes(filterTag);
-      }
-      if (keyword) {
-        filters =
-          filters &&
-          (handleSearch(obj.assetName, keyword) ||
-            handleSearch(obj.assetCode, keyword));
-      }
-      return filters;
-    },
-    []
+  const includesKeywords = useCallback(
+    (asset) =>
+      handleSearch(asset.assetName, keywords) ||
+      handleSearch(asset.assetCode, keywords),
+    [keywords]
   );
 
   const dataset = React.useMemo(() => {
@@ -46,14 +38,11 @@ const Market = (): React.ReactElement => {
         ...item,
         ticker: tickerObject[item.assetCode],
       }))
-      .filter((item) => handleFilter(item, fTag, keywords))
-      .sort((a, b) =>
-        marketCap(parseFloat(b.ticker?.lastPrice), b.ticker?.count) >
-        marketCap(parseFloat(a.ticker?.lastPrice), a.ticker?.count)
-          ? 1
-          : -1
-      );
-  }, [assetTickers, assets, fTag, keywords, handleFilter]);
+      .filter((item) => item.ticker)
+      .filter((item) => (selectedTag ? item.tags.includes(selectedTag) : item))
+      .filter(includesKeywords)
+      .sort(marketCapComparator);
+  }, [assetTickers, assets, selectedTag, includesKeywords]);
 
   const renderedData = React.useMemo(
     () => dataset?.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE),
@@ -70,64 +59,71 @@ const Market = (): React.ReactElement => {
   const handlePage = (e: number): void => setPage(e);
 
   const handleTag = (e: string): void => {
-    setFTag(e);
+    setSelectedTag(e);
     setPage(0);
   };
 
+  const handleChange = (e: React.FormEvent<HTMLInputElement>): void =>
+    setKeywords(e.currentTarget.value);
+
   return (
     <div style={{ display: 'unset' }}>
-      <div className="container">
-        <h5 className="font-bold">Markets</h5>
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={(e) => setKeywords(e.target.value)}
-          className="input input-bordered"
-        />
+      <div className="container mb-5">
+        <div className="md:flex justify-between items-center">
+          <h5 className="font-bold md:text-2xl mb-4">Markets</h5>
+          <SearchBar placeholder="Search" onChange={handleChange} />
+        </div>
         <Tag>
-          <Tag.Item handleClick={() => handleTag('')} text="all" />
+          <Tag.Item
+            handleClick={() => handleTag('')}
+            text="all"
+            active={selectedTag === ''}
+          />
           {tags.map((tag) => (
-            <Tag.Item key={tag} handleClick={() => handleTag(tag)} text={tag} />
+            <Tag.Item
+              key={tag}
+              active={tag === selectedTag}
+              handleClick={() => handleTag(tag)}
+              text={tag}
+            />
           ))}
         </Tag>
       </div>
       <div>
+        <TableHeader />
+        {renderedData.length < 1 && <Empty />}
         {renderedData.map((item) => (
           <TableItem key={item.id} data={item} />
         ))}
       </div>
-      <div className="container flex justify-end my-5">
-        <Pagination>
-          <Pagination.Prev onClick={handlePrev} />
-          {page >= 1 && (
-            <Pagination.Item onClick={() => handlePage(0)}>1</Pagination.Item>
-          )}
+      {renderedData.length > 0 && (
+        <div className="container flex justify-end my-5">
+          <Pagination>
+            <Pagination.Prev onClick={handlePrev} />
+            {page >= 1 && (
+              <Pagination.Item onClick={() => handlePage(0)}>1</Pagination.Item>
+            )}
 
-          {page > 1 && (
-            <Pagination.Item disabled onClick={() => handlePage(0)}>
-              ...
+            {page > 1 && <Pagination.Item disabled>...</Pagination.Item>}
+
+            <Pagination.Item active onClick={() => handlePage(page)}>
+              {page + 1}
             </Pagination.Item>
-          )}
-
-          <Pagination.Item active onClick={() => handlePage(page)}>
-            {page + 1}
-          </Pagination.Item>
-          {Math.floor(dataset.length / 20) - 1 !== page &&
-            Math.floor(dataset.length / 20) !== page && (
-              <Pagination.Item disabled onClick={() => handlePage(0)}>
-                ...
+            {Math.floor(dataset.length / 20) - 1 !== page &&
+              Math.floor(dataset.length / 20) !== page && (
+                <Pagination.Item disabled>...</Pagination.Item>
+              )}
+            {Math.floor(dataset.length / 20) !== page && (
+              <Pagination.Item
+                onClick={() => handlePage(Math.floor(dataset.length / 20))}
+              >
+                {Math.floor(dataset.length / 20) + 1}
               </Pagination.Item>
             )}
-          {Math.floor(dataset.length / 20) !== page && (
-            <Pagination.Item
-              onClick={() => handlePage(Math.floor(dataset.length / 20))}
-            >
-              {Math.floor(dataset.length / 20) + 1}
-            </Pagination.Item>
-          )}
-          <Pagination.Next onClick={handleNext} />
-        </Pagination>
-      </div>
+            <Pagination.Next onClick={handleNext} />
+          </Pagination>
+        </div>
+      )}
     </div>
   );
 };

@@ -12,3 +12,12 @@ export const numberFormater = new Intl.NumberFormat('dec', {
 
 export const handleSearch = (text: string, key: string): boolean =>
   text.toLowerCase().search(key.toLowerCase()) !== -1;
+
+export const marketCapComparator = (
+  a: Record<string, any>,
+  b: Record<string, any>
+): number =>
+  marketCap(parseFloat(b.ticker?.lastPrice), b.ticker?.count) >
+  marketCap(parseFloat(a.ticker?.lastPrice), a.ticker?.count)
+    ? 1
+    : -1;
