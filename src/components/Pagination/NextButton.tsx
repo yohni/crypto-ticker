@@ -1,11 +1,11 @@
 import React from 'react';
 
 interface INextButton {
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const NextButton = ({ onClick }: INextButton): React.ReactElement => (
-  <button type="button" className="btn btn-xs" onClick={onClick}>
+const NextButton: React.FC<INextButton> = ({ onClick }: INextButton) => (
+  <button type="button" className="btn btn-xs md:btn-sm" onClick={onClick}>
     »
   </button>
 );

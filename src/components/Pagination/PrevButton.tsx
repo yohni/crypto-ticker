@@ -1,11 +1,11 @@
 import React from 'react';
 
 interface IPrevButton {
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const PrevButton = ({ onClick }: IPrevButton): React.ReactElement => (
-  <button type="button" className="btn btn-xs" onClick={onClick}>
+const PrevButton: React.FC<IPrevButton> = ({ onClick }: IPrevButton) => (
+  <button type="button" className="btn btn-xs md:btn-sm" onClick={onClick}>
     «
   </button>
 );

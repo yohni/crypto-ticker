@@ -6,18 +6,18 @@ interface IPageNumber {
   children: React.ReactNode;
   active?: boolean;
   disabled?: boolean;
-  onClick: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const PageNumber = ({
+const PageNumber: React.FC<IPageNumber> = ({
   children,
   active = false,
   disabled = false,
   onClick,
-}: IPageNumber): React.ReactElement => (
+}: IPageNumber) => (
   <button
     type="button"
-    className={classNames('btn btn-xs', {
+    className={classNames('btn btn-xs md:btn-sm', {
       'btn-active': active,
       'btn-disabled': disabled,
     })}
