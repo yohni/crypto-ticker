@@ -17,7 +17,7 @@ const TableHeader: React.FC = () => (
     <div className="flex-1 text-right">
       <div className="hidden md:flex md:flex-row-reverse md:justify-around md:items-center">
         <div className="text-xs md:text-base">Market Cap</div>
-        <div className="text-xs md:text-base">Volume</div>
+        <div className="text-xs md:text-base">24h Volume</div>
       </div>
       <div className="md:hidden flex justify-end">
         <div className="text-xs md:text-base">Cap</div>
