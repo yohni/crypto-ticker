@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import { useCallback } from 'react';
 import Empty from '../components/Empty';
@@ -15,8 +16,8 @@ const Market: React.FC = () => {
   const [selectedTag, setSelectedTag] = React.useState('');
   const [keywords, setKeywords] = React.useState('');
   const PER_PAGE = 20;
-  const { assets, isLoading, isError, tags } = useAssets();
-  const { assetTickers, isError: tickerError } = useTicker();
+  const { assets, tags } = useAssets();
+  const { assetTickers } = useTicker();
 
   const includesKeywords = useCallback(
     (asset) =>

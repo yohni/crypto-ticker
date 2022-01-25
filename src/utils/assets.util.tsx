@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const marketCap = (price: number, vol: number): number => price * vol;
 
 export const currencyFormatter = new Intl.NumberFormat('en-US', {

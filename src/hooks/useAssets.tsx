@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useMemo } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '../api/client';
 import { IAsset, IAssetResponse } from '../types/assets';
@@ -17,7 +16,7 @@ function useAssets(): IHookAsset {
     refreshInterval: 0,
   });
 
-  const tags: string[] = useMemo(() => {
+  const tags: string[] = React.useMemo(() => {
     const allTags: string[] = [];
     (data as IAssetResponse)?.data.forEach((item) => {
       allTags.push(...item.tags);

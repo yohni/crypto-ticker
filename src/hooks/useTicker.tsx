@@ -1,4 +1,3 @@
-import React from 'react';
 import useSWR from 'swr';
 import { fetcher } from '../api/client';
 import { ITicker } from '../types/tickers';

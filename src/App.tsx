@@ -1,4 +1,4 @@
-import React, { createContext, useMemo } from 'react';
+import React from 'react';
 import Market from './containers/Market';
 import Navbar from './components/Navbar';
 
