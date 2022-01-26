@@ -10,14 +10,12 @@ export default {
 
 const Template: ComponentStory<typeof Pagination> = (args) => (
   <Pagination>
-    <Pagination.Prev {...args} />
-    <Pagination.Item {...args}>1</Pagination.Item>
-    <Pagination.Next {...args} />
+    <Pagination.Prev onClick={() => alert('works')} {...args} />
+    <Pagination.Item onClick={() => alert('works')} {...args}>
+      1
+    </Pagination.Item>
+    <Pagination.Next onClick={() => alert('works')} {...args} />
   </Pagination>
 );
 
 export const Main = Template.bind({});
-
-Main.args = {
-  onClick: () => allert('works'),
-};

@@ -10,14 +10,9 @@ export default {
 
 const Template: ComponentStory<typeof Tag> = (args) => (
   <Tag>
-    <Tag.Item {...args} />
-    <Tag.Item {...args} />
+    <Tag.Item handleClick={() => alert('works')} text="DeFi" {...args} />
+    <Tag.Item handleClick={() => alert('works')} text="NFT" {...args} />
   </Tag>
 );
 
 export const Main = Template.bind({});
-
-Main.args = {
-  text: 'DeFi',
-  handleClick: () => alert('works'),
-};

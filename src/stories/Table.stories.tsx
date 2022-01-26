@@ -11,4 +11,4 @@ const Template: ComponentStory<typeof TableHeader> = (args) => (
   <TableHeader {...args} />
 );
 
-export const Main = Template.bind({});
+export const Header = Template.bind({});
