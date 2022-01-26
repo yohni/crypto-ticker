@@ -7,7 +7,7 @@ import NavbarDrawer from './NavbarDrawer';
 
 const NAVBAR_MENU = [
   {
-    link: '/',
+    link: 'https://master--61f0bf5717bcea003a760a30.chromatic.com',
     label: 'Storybook',
   },
 ];
