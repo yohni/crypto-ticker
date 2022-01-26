@@ -45,7 +45,9 @@ const Navbar: React.FunctionComponent = () => {
                 key={item.link}
                 className={classNames('ml-4 hidden md:flex text-xl')}
               >
-                <a href={item.link}>{item.label}</a>
+                <a href={item.link} target="_blank" rel="noreferrer">
+                  {item.label}
+                </a>
               </div>
             ))}
             {/* burger */}

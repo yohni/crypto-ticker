@@ -27,7 +27,7 @@ const NavbarDrawer: React.FunctionComponent<INavbarDrawerProps> = ({
       )}
     >
       {menu.map((item) => (
-        <a key={item.link} href={item.link}>
+        <a key={item.link} href={item.link} target="_blank" rel="noreferrer">
           {item.label}
         </a>
       ))}
