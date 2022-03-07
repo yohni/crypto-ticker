@@ -43,7 +43,9 @@ const Navbar: React.FunctionComponent = () => {
             {NAVBAR_MENU.map((item) => (
               <div
                 key={item.link}
-                className={classNames('ml-4 hidden md:flex text-xl')}
+                className={classNames(
+                  'ml-4 hidden md:flex text-lg hover:text-primary'
+                )}
               >
                 <a href={item.link} target="_blank" rel="noreferrer">
                   {item.label}
